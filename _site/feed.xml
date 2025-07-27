@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2025-07-27T12:10:11+03:00</updated><id>http://0.0.0.0:4000/feed.xml</id><title type="html">Ahmed Arafa</title><subtitle>DevOps Engineer sharing thoughts on automation, infrastructure,  debugging adventures, and the occasional &quot;how not to break production&quot; story.</subtitle><author><name>Ahmed Arafa</name></author><entry><title type="html">Hello</title><link href="http://0.0.0.0:4000/2025/07/27/hello/" rel="alternate" type="text/html" title="Hello" /><published>2025-07-27T11:39:09+03:00</published><updated>2025-07-27T11:39:09+03:00</updated><id>http://0.0.0.0:4000/2025/07/27/hello</id><content type="html" xml:base="http://0.0.0.0:4000/2025/07/27/hello/"><![CDATA[<p>Hello! Welcome to my blog.</p>
+
+<p>This is my first post and I’m excited to start sharing content here.</p>
+
+<!--more-->
+
+<p>I’ll be writing about various topics that interest me, sharing experiences, and hopefully creating something useful for readers.</p>
+
+<p>Thanks for stopping by!</p>]]></content><author><name>Ahmed Arafa</name></author><category term="general" /><summary type="html"><![CDATA[Welcome to my blog! A simple introduction.]]></summary></entry></feed>

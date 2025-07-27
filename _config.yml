@@ -1,0 +1,74 @@
+# Site settings
+title: "Ahmed Arafa"
+email: "arafa.g2007@gmail.com"
+description: >-
+  DevOps Engineer sharing thoughts on automation, infrastructure, 
+  debugging adventures, and the occasional "how not to break production" story.
+baseurl: ""
+url: "https://ahmadarafaa.github.io"  # Replace with your actual domain
+
+# Author info
+author:
+  name: "Ahmed Arafa"
+  bio: "DevOps Engineer | Converting Chaos into Order | Share the Journey"
+  location: "Earth"
+  
+# Social links
+social:
+  github: "ahmadarafaa"
+  linkedin: "https://www.linkedin.com/in/ahmed-arafa-808467127/"
+
+# Theme settings
+theme_color: "#2d3748"
+accent_color: "#4299e1"
+footer_tagline: "Deploying thoughts • 99.9% uptime guaranteed*"
+footer_disclaimer: "*Uptime not actually guaranteed 😅"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /:year/:month/:day/:title/
+paginate: 5
+paginate_path: "/page:num/"
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Collections
+collections:
+  pages:
+    output: true
+    permalink: /:name/
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+
+# SEO and social
+twitter:
+  username: # No Twitter account
+  card: summary
+
+# Reading time calculation
+reading_time: true
+
+# Code highlighting theme
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true

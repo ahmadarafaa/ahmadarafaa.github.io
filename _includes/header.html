@@ -1,0 +1,25 @@
+<header class="site-header">
+    <div class="container">
+        <div class="header-content">
+            <div class="terminal-prompt">
+                <span class="prompt-user">root@infra</span>
+                <span class="prompt-separator">:</span>
+                <span class="prompt-path">~/tasks</span>
+                <span class="prompt-symbol">#</span>
+                <span class="prompt-cursor">_</span>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="{{ "/" | relative_url }}" class="nav-link {% if page.url == "/" %}active{% endif %}">
+                    home
+                </a>
+                <a href="{{ "/about/" | relative_url }}" class="nav-link {% if page.url == "/about/" %}active{% endif %}">
+                    about
+                </a>
+                <a href="{{ "/archive/" | relative_url }}" class="nav-link {% if page.url == "/archive/" %}active{% endif %}">
+                    archive
+                </a>
+            </nav>
+        </div>
+    </div>
+</header>
