@@ -28,13 +28,22 @@ footer_disclaimer: "*Uptime not actually guaranteed 😅"
 markdown: kramdown
 highlighter: rouge
 permalink: /:year/:month/:day/:title/
-paginate: 5
-paginate_path: "/page:num/"
+
+# Post ordering (newest first)
+future: false
+show_drafts: false
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "Ahmed Arafa"
 
 # Plugins
 plugins:
   - jekyll-feed
-  - jekyll-paginate
   - jekyll-seo-tag
   - jekyll-sitemap
 
@@ -71,4 +80,4 @@ kramdown:
     span:
       line_numbers: false
     block:
-      line_numbers: true
+      line_numbers: false

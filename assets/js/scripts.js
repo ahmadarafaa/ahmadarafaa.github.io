@@ -22,4 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (themeToggle) {
         themeToggle.addEventListener('click', toggleTheme);
     }
+    
+    // Copy button functionality is now handled by code-copy.js
 });
