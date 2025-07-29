@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>SSH Vault Manager: Because Life’s Too Short for Manual SSH Passwords | Ahmed Arafa</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="SSH Vault Manager: Because Life’s Too Short for Manual SSH Passwords" />
+<meta name="author" content="Ahmed Arafa" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I got tired of typing SSH passwords 50 times a day, so I built a tool that actually makes terminal SSH management enjoyable." />
+<meta property="og:description" content="I got tired of typing SSH passwords 50 times a day, so I built a tool that actually makes terminal SSH management enjoyable." />
+<link rel="canonical" href="http://0.0.0.0:4000/2025/07/27/ssh-vault-manager-secure-ssh-credential-management/" />
+<meta property="og:url" content="http://0.0.0.0:4000/2025/07/27/ssh-vault-manager-secure-ssh-credential-management/" />
+<meta property="og:site_name" content="Ahmed Arafa" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-27T15:21:00+03:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="SSH Vault Manager: Because Life’s Too Short for Manual SSH Passwords" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Ahmed Arafa" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Ahmed Arafa"},"dateModified":"2025-07-27T15:21:00+03:00","datePublished":"2025-07-27T15:21:00+03:00","description":"I got tired of typing SSH passwords 50 times a day, so I built a tool that actually makes terminal SSH management enjoyable.","headline":"SSH Vault Manager: Because Life’s Too Short for Manual SSH Passwords","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/2025/07/27/ssh-vault-manager-secure-ssh-credential-management/"},"url":"http://0.0.0.0:4000/2025/07/27/ssh-vault-manager-secure-ssh-credential-management/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    
+    <!-- Open Graph meta tags for social sharing -->
+    <meta property="og:url" content="http://0.0.0.0:4000/2025/07/27/ssh-vault-manager-secure-ssh-credential-management/">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="SSH Vault Manager: Because Life's Too Short for Manual SSH Passwords">
+    <meta property="og:description" content="I got tired of typing SSH passwords 50 times a day, so I built a tool that actually makes terminal SSH management enjoyable.">
+    <meta property="og:site_name" content="Ahmed Arafa">
+    
+    <meta property="article:published_time" content="2025-07-27T15:21:00+03:00">
+    <meta property="article:author" content="Ahmed Arafa">
+    
+    
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="http://0.0.0.0:4000/2025/07/27/ssh-vault-manager-secure-ssh-credential-management/">
+    <meta name="twitter:title" content="SSH Vault Manager: Because Life's Too Short for Manual SSH Passwords">
+    <meta name="twitter:description" content="I got tired of typing SSH passwords 50 times a day, so I built a tool that actually makes terminal SSH management enjoyable.">
+    
+    <link rel="stylesheet" href="/assets/css/main.css?v=20250729103354">
+    <link rel="alternate" type="application/rss+xml" title="Ahmed Arafa" href="/feed.xml">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/assets/images/favicon-192.png">
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#2d3748">
+    <meta name="msapplication-navbutton-color" content="#2d3748">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Preload key fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body data-theme="dark">
+    <div class="site-wrapper">
+        <header class="site-header">
+    <div class="container">
+        <div class="header-content">
+            <div class="terminal-prompt">
+                <span class="prompt-user">root@infra</span>
+                <span class="prompt-separator">:</span>
+                <span class="prompt-path">~/tasks</span>
+                <span class="prompt-symbol">#</span>
+                <span class="prompt-cursor">_</span>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="/" class="nav-link ">
+                    Home
+                </a>
+                <a href="/about/" class="nav-link ">
+                    About
+                </a>
+                <a href="/tags/" class="nav-link ">
+                    Tags
+                </a>
+                <a href="/archive/" class="nav-link ">
+                    Archive
+                </a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+        
+        <main class="main-content" role="main">
+            <article class="post">
+    <header class="post-header">
+        <h1 class="post-title">SSH Vault Manager: Because Life's Too Short for Manual SSH Passwords</h1>
+        <div class="post-meta">
+            <time datetime="2025-07-27T15:21:00+03:00">July 27, 2025</time>
+            
+            <span class="reading-time">• 
+
+  5
+
+ min read</span>
+            
+            <span class="post-author">• by Ahmed Arafa</span>
+        </div>
+
+        
+        <div class="post-tags">
+            
+            <a href="/tags/#ssh" class="tag">#ssh</a>
+            
+            <a href="/tags/#security" class="tag">#security</a>
+            
+            <a href="/tags/#bash" class="tag">#bash</a>
+            
+            <a href="/tags/#encryption" class="tag">#encryption</a>
+            
+            <a href="/tags/#vault" class="tag">#vault</a>
+            
+            <a href="/tags/#credentials" class="tag">#credentials</a>
+            
+        </div>
+        
+    </header>
+
+    <div class="post-content">
+        <p>Let me paint you a picture: It’s 2 AM, you’re troubleshooting a production issue, and you need to SSH into five different servers. Each time, you’re typing:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ssh devops-user@prod-server-01.company.com
+<span class="c"># Password: *types 16-character password*</span>
+<span class="c"># Connection failed, typo in password</span>
+<span class="nv">$ </span>ssh devops-user@prod-server-01.company.com
+<span class="c"># Password: *types carefully again*</span>
+</code></pre></div></div>
+
+<p>Sound familiar? Yeah, I’ve been there too. One too many times.</p>
+
+<!--more-->
+
+<h2 id="the-problem-that-kept-me-up-at-night">The Problem That Kept Me Up at Night</h2>
+
+<p>I spend most of my day in the terminal. It’s fast, it’s efficient, and honestly, it just feels right. But there was this one thing that always bugged me about SSH connections.</p>
+
+<p>People using GUI tools like PuTTY or Royal TSX get to save their passwords, organize their servers, and connect with a single click. Meanwhile, I’m over here typing the same credentials over and over like it’s 1995.</p>
+
+<p>Don’t get me wrong—SSH keys are great when you can use them. But in the real world? Sometimes you’re dealing with:</p>
+<ul>
+  <li>Legacy systems that only accept passwords</li>
+  <li>Jump servers with strict authentication policies</li>
+  <li>Client environments where you can’t install your keys</li>
+  <li>Shared accounts that rotate passwords weekly</li>
+</ul>
+
+<p>I needed something better. Something that felt natural in the terminal but gave me the convenience of a GUI tool.</p>
+
+<h2 id="enter-ssh-vault-manager">Enter SSH Vault Manager</h2>
+
+<p>So I built <strong>SSH Vault Manager</strong> (SVM). It’s basically what would happen if PuTTY and the terminal had a baby, and that baby was really good at keeping secrets.</p>
+
+<p>Here’s what it does:</p>
+
+<h3 id="security-that-actually-makes-sense">Security That Actually Makes Sense</h3>
+<ul>
+  <li><strong>AES-256 encryption</strong> for everything: no plain text passwords sitting around</li>
+  <li><strong>Master password protection</strong>: one password to rule them all</li>
+  <li><strong>Automatic session timeouts</strong>: because we all forget to lock our screens sometimes</li>
+</ul>
+
+<h3 id="organization-for-real-people">Organization for Real People</h3>
+<ul>
+  <li><strong>Multiple vaults</strong>: keep your prod, staging, and dev credentials separate</li>
+  <li><strong>Quick switching</strong>: jump between environments without thinking</li>
+  <li><strong>Global search</strong>: find that one server whose name you half-remember</li>
+</ul>
+
+<h3 id="actually-pleasant-to-use">Actually Pleasant to Use</h3>
+<ul>
+  <li><strong>Interactive menus</strong>: no need to remember cryptic commands</li>
+  <li><strong>One-command connections</strong>: seriously, just pick a server and go</li>
+  <li><strong>Import/export</strong>: share configurations with your team (passwords stay encrypted)</li>
+</ul>
+
+<h2 id="how-it-actually-works">How It Actually Works</h2>
+
+<p>Let me show you what a typical workflow looks like:</p>
+
+<h3 id="installation-the-easy-part">Installation (The Easy Part)</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Clone and install</span>
+<span class="nv">$ </span>git clone https://github.com/ahmadarafaa/ssh-vault-manager.git
+<span class="nv">$ </span><span class="nb">cd </span>ssh-vault-manager
+<span class="nv">$ </span>./install.sh
+</code></pre></div></div>
+
+<p>The installer sets everything up and adds <code class="language-plaintext highlighter-rouge">svm</code> to your PATH. No complex configuration files, no dependencies to wrestle with.</p>
+
+<h3 id="first-run-setting-up-your-vault">First Run (Setting Up Your Vault)</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>svm
+</code></pre></div></div>
+
+<p>First time? It’ll walk you through creating a master password and your first vault. I recommend starting with something like “production” or “work” depending on what you’re managing.</p>
+
+<h3 id="adding-your-first-server">Adding Your First Server</h3>
+
+<p>The interactive menu makes this painless:</p>
+
+<ol>
+  <li>Choose “Server Management”</li>
+  <li>Pick “Add Server”</li>
+  <li>Enter your details (hostname, username, port if needed)</li>
+  <li>Enter the password once—SVM encrypts and stores it</li>
+</ol>
+
+<p>That’s it. You’ll never type that password again.</p>
+
+<h3 id="connecting-the-magic-moment">Connecting (The Magic Moment)</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>svm
+<span class="c"># Choose "Connect to Server"</span>
+<span class="c"># Pick your server from the list</span>
+<span class="c"># *connects immediately*</span>
+</code></pre></div></div>
+
+<p>No typing. No remembering. Just connection.</p>
+
+<h2 id="real-world-usage-examples">Real-World Usage Examples</h2>
+
+<p>Here’s how I use SVM in my daily work:</p>
+
+<p><strong>Morning routine:</strong> Need to check logs across three production servers?</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>svm
+<span class="c"># Connect to prod-web-01</span>
+<span class="c"># Do my thing, exit</span>
+<span class="nv">$ </span>svm  
+<span class="c"># Connect to prod-db-01</span>
+<span class="c"># Check database status, exit</span>
+<span class="nv">$ </span>svm
+<span class="c"># Connect to prod-api-01</span>
+<span class="c"># Review API logs, done</span>
+</code></pre></div></div>
+
+<p><strong>Client work:</strong> Switching between different client environments?</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>svm
+<span class="c"># Switch to "client-a" vault</span>
+<span class="c"># Connect to their staging server</span>
+<span class="c"># Test deployment, switch back to my main vault</span>
+</code></pre></div></div>
+
+<p><strong>Emergency response:</strong> Production is down, need to check multiple servers fast?</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>svm
+<span class="c"># Global search for "prod"</span>
+<span class="c"># Shows all production servers across all vaults</span>
+<span class="c"># Connect to each one quickly without password drama</span>
+</code></pre></div></div>
+
+<h2 id="the-technical-bits-for-the-curious">The Technical Bits (For the Curious)</h2>
+
+<p>SVM is built in Bash because:</p>
+<ol>
+  <li><strong>Universal compatibility</strong>—works on any Unix-like system</li>
+  <li><strong>No runtime dependencies</strong>—if you have Bash, you can run it</li>
+  <li><strong>Easy to audit</strong>—the entire codebase is readable shell script</li>
+  <li><strong>Simple deployment</strong>—no compilation, no package management headaches</li>
+</ol>
+
+<p>For encryption, I use OpenSSL with AES-256-CBC. The encrypted vault files are portable—you can sync them across machines or back them up however you want.</p>
+
+<h2 id="why-im-sharing-this">Why I’m Sharing This</h2>
+
+<p>Honestly? Because I think other terminal users deserve better than manually typing SSH passwords all day.</p>
+
+<p>I’ve been using SVM for months now, and it’s genuinely changed how I work. No more password fatigue, no more typos causing connection failures, no more “wait, what was the IP for that staging server again?”</p>
+
+<p>It’s one of those tools that solves a small but persistent annoyance, and those tend to have the biggest impact on day-to-day productivity.</p>
+
+<h2 id="try-it-out">Try It Out</h2>
+
+<p>The project is open source and available on GitHub: <strong><a href="https://github.com/ahmadarafaa/ssh-vault-manager">ssh-vault-manager</a></strong></p>
+
+<p>If you’re skeptical, I get it. But give it a try for a week. I think you’ll find yourself wondering how you managed SSH connections before.</p>
+
+<p>Found a bug? Have an idea for improvement? Issues and pull requests are welcome. This tool works for me, but I’d love to make it work better for everyone.</p>
+
+<hr />
+
+<p><em>P.S. - Yes, I know SSH keys are the “proper” way to do authentication. But sometimes the real world has other plans, and we need tools that work with reality, not just best practices.</em></p>
+
+    </div>
+
+    <footer class="post-footer">
+        <div class="share-buttons">
+            <span class="share-label">Share this post:</span>
+            <a href="https://twitter.com/intent/tweet?text=I%20got%20tired%20of%20typing%20SSH%20passwords%2050%20times%20a%20day,%20so%20I%20built%20a%20tool%20that%20actually%20makes%20terminal%20SSH%20management%20enjoyable.%0ASSH%20Vault%20Manager:%20Because%20Life's%20Too%20Short%20for%20Manual%20SSH%20Passwords%0A%0Ahttp://0.0.0.0:4000/2025/07/27/ssh-vault-manager-secure-ssh-credential-management/"
+                target="_blank" rel="noopener" class="share-btn share-x" title="Share on X">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+                X
+            </a>
+            <a href="https://www.linkedin.com/feed/?shareActive=true&text=I%20got%20tired%20of%20typing%20SSH%20passwords%2050%20times%20a%20day,%20so%20I%20built%20a%20tool%20that%20actually%20makes%20terminal%20SSH%20management%20enjoyable.%0ASSH%20Vault%20Manager:%20Because%20Life's%20Too%20Short%20for%20Manual%20SSH%20Passwords%0A%0Ahttp://0.0.0.0:4000/2025/07/27/ssh-vault-manager-secure-ssh-credential-management/"
+                target="_blank" rel="noopener" class="share-btn share-linkedin" title="Share on LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+                LinkedIn
+            </a>
+            <a href="mailto:?subject=SSH%20Vault%20Manager:%20Because%20Life's%20Too%20Short%20for%20Manual%20SSH%20Passwords&body=I%20got%20tired%20of%20typing%20SSH%20passwords%2050%20times%20a%20day,%20so%20I%20built%20a%20tool%20that%20actually%20makes%20terminal%20SSH%20management%20enjoyable.%0ACheck out this post: http://0.0.0.0:4000/2025/07/27/ssh-vault-manager-secure-ssh-credential-management/"
+                class="share-btn share-email" title="Share via Email">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                </svg>
+                Email
+            </a>
+        </div>
+
+        
+        <nav class="post-navigation">
+            
+            <div class="nav-previous">
+                <a href="/2025/07/27/hello/" rel="prev">
+                    <span class="nav-label">← Previous Post</span>
+                    <span class="nav-title">Hello</span>
+                </a>
+            </div>
+            
+
+            
+        </nav>
+        
+    </footer>
+</article>
+        </main>
+        
+        <footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p class="footer-tagline">Deploying thoughts • 99.9% uptime guaranteed*</p>
+                <p class="footer-disclaimer">*Uptime not actually guaranteed 😅</p>
+            </div>
+            
+            <div class="footer-right">
+                <div class="social-links">
+                    <a href="https://github.com/ahmadarafaa" target="_blank" rel="noopener" class="social-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a>
+                    
+                    <a href="https://www.linkedin.com/in/ahmed-arafa-808467127/" target="_blank" rel="noopener" class="social-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                        LinkedIn
+                    </a>
+                    
+                    <a href="mailto:arafa.g2007@gmail.com" class="social-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        Email
+                    </a>
+
+                    <a href="/feed.xml" target="_blank" rel="noopener" class="social-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M4.10948 18h15.7809C20.4326 18 21 17.4326 21 16.7176V7.28241C21 6.56741 20.4326 6.00001 19.8194 6.00001L12 12.4828L4.18051 6.00001C3.56741 6.00001 3 6.56741 3 7.28241V16.7176C3 17.4326 3.56741 18 4.10948 18Z"/>
+                        </svg>
+                        RSS
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-info">
+            <p>&copy; 2025 Ahmed Arafa.</p>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    <script src="/assets/js/scripts.js"></script>
+    <script src="/assets/js/code-copy.js"></script>
+    
+    <!-- Dark mode toggle -->
+    <div class="theme-toggle" id="theme-toggle" title="Toggle theme">
+        <svg class="theme-icon theme-icon--dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Z"/>
+        </svg>
+        <svg class="theme-icon theme-icon--light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"/>
+        </svg>
+    </div>
+</body>
+</html>

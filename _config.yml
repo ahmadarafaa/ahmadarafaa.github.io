@@ -5,14 +5,14 @@ description: >-
   DevOps Engineer sharing thoughts on automation, infrastructure, 
   debugging adventures, and the occasional "how not to break production" story.
 baseurl: ""
-url: "https://ahmadarafaa.github.io"  # Replace with your actual domain
+url: "https://ahmadarafaa.github.io" # Replace with your actual domain
 
 # Author info
 author:
   name: "Ahmed Arafa"
   bio: "DevOps Engineer | Converting Chaos into Order | Share the Journey"
   location: "Earth"
-  
+
 # Social links
 social:
   github: "ahmadarafaa"
@@ -47,6 +47,12 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
+# GitHub Pages whitelist (for compatibility)
+whitelist:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
 # Collections
 collections:
   pages:
@@ -76,7 +82,7 @@ reading_time: true
 kramdown:
   syntax_highlighter: rouge
   syntax_highlighter_opts:
-    css_class: 'highlight'
+    css_class: "highlight"
     span:
       line_numbers: false
     block:

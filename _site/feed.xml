@@ -1,4 +1,164 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2025-07-27T12:10:11+03:00</updated><id>http://0.0.0.0:4000/feed.xml</id><title type="html">Ahmed Arafa</title><subtitle>DevOps Engineer sharing thoughts on automation, infrastructure,  debugging adventures, and the occasional &quot;how not to break production&quot; story.</subtitle><author><name>Ahmed Arafa</name></author><entry><title type="html">Hello</title><link href="http://0.0.0.0:4000/2025/07/27/hello/" rel="alternate" type="text/html" title="Hello" /><published>2025-07-27T11:39:09+03:00</published><updated>2025-07-27T11:39:09+03:00</updated><id>http://0.0.0.0:4000/2025/07/27/hello</id><content type="html" xml:base="http://0.0.0.0:4000/2025/07/27/hello/"><![CDATA[<p>Hello! Welcome to my blog.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2025-07-29T10:33:54+03:00</updated><id>http://0.0.0.0:4000/feed.xml</id><title type="html">Ahmed Arafa</title><subtitle>DevOps Engineer sharing thoughts on automation, infrastructure,  debugging adventures, and the occasional &quot;how not to break production&quot; story.</subtitle><author><name>Ahmed Arafa</name></author><entry><title type="html">SSH Vault Manager: Because Life’s Too Short for Manual SSH Passwords</title><link href="http://0.0.0.0:4000/2025/07/27/ssh-vault-manager-secure-ssh-credential-management/" rel="alternate" type="text/html" title="SSH Vault Manager: Because Life’s Too Short for Manual SSH Passwords" /><published>2025-07-27T15:21:00+03:00</published><updated>2025-07-27T15:21:00+03:00</updated><id>http://0.0.0.0:4000/2025/07/27/ssh-vault-manager-secure-ssh-credential-management</id><content type="html" xml:base="http://0.0.0.0:4000/2025/07/27/ssh-vault-manager-secure-ssh-credential-management/"><![CDATA[<p>Let me paint you a picture: It’s 2 AM, you’re troubleshooting a production issue, and you need to SSH into five different servers. Each time, you’re typing:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ssh devops-user@prod-server-01.company.com
+<span class="c"># Password: *types 16-character password*</span>
+<span class="c"># Connection failed, typo in password</span>
+<span class="nv">$ </span>ssh devops-user@prod-server-01.company.com
+<span class="c"># Password: *types carefully again*</span>
+</code></pre></div></div>
+
+<p>Sound familiar? Yeah, I’ve been there too. One too many times.</p>
+
+<!--more-->
+
+<h2 id="the-problem-that-kept-me-up-at-night">The Problem That Kept Me Up at Night</h2>
+
+<p>I spend most of my day in the terminal. It’s fast, it’s efficient, and honestly, it just feels right. But there was this one thing that always bugged me about SSH connections.</p>
+
+<p>People using GUI tools like PuTTY or Royal TSX get to save their passwords, organize their servers, and connect with a single click. Meanwhile, I’m over here typing the same credentials over and over like it’s 1995.</p>
+
+<p>Don’t get me wrong—SSH keys are great when you can use them. But in the real world? Sometimes you’re dealing with:</p>
+<ul>
+  <li>Legacy systems that only accept passwords</li>
+  <li>Jump servers with strict authentication policies</li>
+  <li>Client environments where you can’t install your keys</li>
+  <li>Shared accounts that rotate passwords weekly</li>
+</ul>
+
+<p>I needed something better. Something that felt natural in the terminal but gave me the convenience of a GUI tool.</p>
+
+<h2 id="enter-ssh-vault-manager">Enter SSH Vault Manager</h2>
+
+<p>So I built <strong>SSH Vault Manager</strong> (SVM). It’s basically what would happen if PuTTY and the terminal had a baby, and that baby was really good at keeping secrets.</p>
+
+<p>Here’s what it does:</p>
+
+<h3 id="security-that-actually-makes-sense">Security That Actually Makes Sense</h3>
+<ul>
+  <li><strong>AES-256 encryption</strong> for everything: no plain text passwords sitting around</li>
+  <li><strong>Master password protection</strong>: one password to rule them all</li>
+  <li><strong>Automatic session timeouts</strong>: because we all forget to lock our screens sometimes</li>
+</ul>
+
+<h3 id="organization-for-real-people">Organization for Real People</h3>
+<ul>
+  <li><strong>Multiple vaults</strong>: keep your prod, staging, and dev credentials separate</li>
+  <li><strong>Quick switching</strong>: jump between environments without thinking</li>
+  <li><strong>Global search</strong>: find that one server whose name you half-remember</li>
+</ul>
+
+<h3 id="actually-pleasant-to-use">Actually Pleasant to Use</h3>
+<ul>
+  <li><strong>Interactive menus</strong>: no need to remember cryptic commands</li>
+  <li><strong>One-command connections</strong>: seriously, just pick a server and go</li>
+  <li><strong>Import/export</strong>: share configurations with your team (passwords stay encrypted)</li>
+</ul>
+
+<h2 id="how-it-actually-works">How It Actually Works</h2>
+
+<p>Let me show you what a typical workflow looks like:</p>
+
+<h3 id="installation-the-easy-part">Installation (The Easy Part)</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Clone and install</span>
+<span class="nv">$ </span>git clone https://github.com/ahmadarafaa/ssh-vault-manager.git
+<span class="nv">$ </span><span class="nb">cd </span>ssh-vault-manager
+<span class="nv">$ </span>./install.sh
+</code></pre></div></div>
+
+<p>The installer sets everything up and adds <code class="language-plaintext highlighter-rouge">svm</code> to your PATH. No complex configuration files, no dependencies to wrestle with.</p>
+
+<h3 id="first-run-setting-up-your-vault">First Run (Setting Up Your Vault)</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>svm
+</code></pre></div></div>
+
+<p>First time? It’ll walk you through creating a master password and your first vault. I recommend starting with something like “production” or “work” depending on what you’re managing.</p>
+
+<h3 id="adding-your-first-server">Adding Your First Server</h3>
+
+<p>The interactive menu makes this painless:</p>
+
+<ol>
+  <li>Choose “Server Management”</li>
+  <li>Pick “Add Server”</li>
+  <li>Enter your details (hostname, username, port if needed)</li>
+  <li>Enter the password once—SVM encrypts and stores it</li>
+</ol>
+
+<p>That’s it. You’ll never type that password again.</p>
+
+<h3 id="connecting-the-magic-moment">Connecting (The Magic Moment)</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>svm
+<span class="c"># Choose "Connect to Server"</span>
+<span class="c"># Pick your server from the list</span>
+<span class="c"># *connects immediately*</span>
+</code></pre></div></div>
+
+<p>No typing. No remembering. Just connection.</p>
+
+<h2 id="real-world-usage-examples">Real-World Usage Examples</h2>
+
+<p>Here’s how I use SVM in my daily work:</p>
+
+<p><strong>Morning routine:</strong> Need to check logs across three production servers?</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>svm
+<span class="c"># Connect to prod-web-01</span>
+<span class="c"># Do my thing, exit</span>
+<span class="nv">$ </span>svm  
+<span class="c"># Connect to prod-db-01</span>
+<span class="c"># Check database status, exit</span>
+<span class="nv">$ </span>svm
+<span class="c"># Connect to prod-api-01</span>
+<span class="c"># Review API logs, done</span>
+</code></pre></div></div>
+
+<p><strong>Client work:</strong> Switching between different client environments?</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>svm
+<span class="c"># Switch to "client-a" vault</span>
+<span class="c"># Connect to their staging server</span>
+<span class="c"># Test deployment, switch back to my main vault</span>
+</code></pre></div></div>
+
+<p><strong>Emergency response:</strong> Production is down, need to check multiple servers fast?</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>svm
+<span class="c"># Global search for "prod"</span>
+<span class="c"># Shows all production servers across all vaults</span>
+<span class="c"># Connect to each one quickly without password drama</span>
+</code></pre></div></div>
+
+<h2 id="the-technical-bits-for-the-curious">The Technical Bits (For the Curious)</h2>
+
+<p>SVM is built in Bash because:</p>
+<ol>
+  <li><strong>Universal compatibility</strong>—works on any Unix-like system</li>
+  <li><strong>No runtime dependencies</strong>—if you have Bash, you can run it</li>
+  <li><strong>Easy to audit</strong>—the entire codebase is readable shell script</li>
+  <li><strong>Simple deployment</strong>—no compilation, no package management headaches</li>
+</ol>
+
+<p>For encryption, I use OpenSSL with AES-256-CBC. The encrypted vault files are portable—you can sync them across machines or back them up however you want.</p>
+
+<h2 id="why-im-sharing-this">Why I’m Sharing This</h2>
+
+<p>Honestly? Because I think other terminal users deserve better than manually typing SSH passwords all day.</p>
+
+<p>I’ve been using SVM for months now, and it’s genuinely changed how I work. No more password fatigue, no more typos causing connection failures, no more “wait, what was the IP for that staging server again?”</p>
+
+<p>It’s one of those tools that solves a small but persistent annoyance, and those tend to have the biggest impact on day-to-day productivity.</p>
+
+<h2 id="try-it-out">Try It Out</h2>
+
+<p>The project is open source and available on GitHub: <strong><a href="https://github.com/ahmadarafaa/ssh-vault-manager">ssh-vault-manager</a></strong></p>
+
+<p>If you’re skeptical, I get it. But give it a try for a week. I think you’ll find yourself wondering how you managed SSH connections before.</p>
+
+<p>Found a bug? Have an idea for improvement? Issues and pull requests are welcome. This tool works for me, but I’d love to make it work better for everyone.</p>
+
+<hr />
+
+<p><em>P.S. - Yes, I know SSH keys are the “proper” way to do authentication. But sometimes the real world has other plans, and we need tools that work with reality, not just best practices.</em></p>]]></content><author><name>Ahmed Arafa</name></author><category term="devops" /><category term="security" /><category term="tools" /><category term="ssh" /><category term="security" /><category term="bash" /><category term="encryption" /><category term="vault" /><category term="credentials" /><summary type="html"><![CDATA[I got tired of typing SSH passwords 50 times a day, so I built a tool that actually makes terminal SSH management enjoyable.]]></summary></entry><entry><title type="html">Hello</title><link href="http://0.0.0.0:4000/2025/07/27/hello/" rel="alternate" type="text/html" title="Hello" /><published>2025-07-27T13:00:00+03:00</published><updated>2025-07-27T13:00:00+03:00</updated><id>http://0.0.0.0:4000/2025/07/27/hello</id><content type="html" xml:base="http://0.0.0.0:4000/2025/07/27/hello/"><![CDATA[<p>Hello! Welcome to my blog.</p>
 
 <p>This is my first post and I’m excited to start sharing content here.</p>
 

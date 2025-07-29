@@ -10,48 +10,179 @@ permalink: /tags/
         <p class="page-description">Browse posts by topic</p>
     </div>
 
-    <div class="tags-cloud">
-        {% assign sorted_tags = site.tags | sort %}
-        {% for tag in sorted_tags %}
-        {% assign tag_name = tag[0] %}
-        {% assign tag_posts = tag[1] %}
-        <a href="{{ '/tags/' | append: tag_name | relative_url }}" class="tag-cloud-item">
-            <span class="tag-name">#{{ tag_name }}</span>
-            <span class="tag-count">{{ tag_posts | size }}</span>
-        </a>
-        {% endfor %}
+    <!-- Tag filter display -->
+    <div id="tag-filter" style="display: none;">
+        <div class="tag-filter-header">
+            <h2 id="tag-filter-title">Posts tagged with "<span id="current-tag"></span>"</h2>
+            <button id="clear-filter" class="back-to-tags">← All Tags</button>
+        </div>
+        <div id="filtered-posts"></div>
     </div>
 
-    <div class="tags-list">
-        <h2>Tags by Category</h2>
-        {% assign sorted_tags = site.tags | sort %}
-        {% for tag in sorted_tags %}
-        {% assign tag_name = tag[0] %}
-        {% assign tag_posts = tag[1] %}
-        <div class="tag-group">
-            <h3>
-                <a href="{{ '/tags/' | append: tag_name | relative_url }}" class="tag-group-title">
-                    #{{ tag_name }}
-                    <span class="tag-group-count">({{ tag_posts | size }})</span>
-                </a>
-            </h3>
-            <div class="tag-group-posts">
-                {% assign recent_posts = tag_posts | sort: 'date' | reverse | limit: 3 %}
-                {% for post in recent_posts %}
-                <div class="tag-group-post">
-                    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-                    <time>{{ post.date | date: "%b %d, %Y" }}</time>
-                </div>
-                {% endfor %}
-                {% if tag_posts.size > 3 %}
-                <div class="tag-group-more">
-                    <a href="{{ '/tags/' | append: tag_name | relative_url }}">
-                        View all {{ tag_posts.size }} posts →
-                    </a>
-                </div>
-                {% endif %}
-            </div>
+    <!-- Default tags view -->
+    <div id="tags-view">
+        <div class="tags-cloud">
+            {% assign sorted_tags = site.tags | sort %}
+            {% for tag in sorted_tags %}
+            {% assign tag_name = tag[0] %}
+            {% assign tag_posts = tag[1] %}
+            <a href="#{{ tag_name }}" class="tag-cloud-item" data-tag="{{ tag_name }}">
+                <span class="tag-name">#{{ tag_name }}</span>
+                <span class="tag-count">{{ tag_posts | size }}</span>
+            </a>
+            {% endfor %}
         </div>
-        {% endfor %}
+
+        <div class="tags-list">
+            <h2>Tags by Category</h2>
+            {% assign sorted_tags = site.tags | sort %}
+            {% for tag in sorted_tags %}
+            {% assign tag_name = tag[0] %}
+            {% assign tag_posts = tag[1] %}
+            <div class="tag-group">
+                <h3>
+                    <a href="#{{ tag_name }}" class="tag-group-title" data-tag="{{ tag_name }}">
+                        #{{ tag_name }}
+                        <span class="tag-group-count">({{ tag_posts | size }})</span>
+                    </a>
+                </h3>
+                <div class="tag-group-posts">
+                    {% assign recent_posts = tag_posts | sort: 'date' | reverse | limit: 3 %}
+                    {% for post in recent_posts %}
+                    <div class="tag-group-post">
+                        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                        <time>{{ post.date | date: "%b %d, %Y" }}</time>
+                    </div>
+                    {% endfor %}
+                    {% if tag_posts.size > 3 %}
+                    <div class="tag-group-more">
+                        <a href="#{{ tag_name }}" data-tag="{{ tag_name }}">
+                            View all {{ tag_posts.size }} posts →
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
+
+<!-- JavaScript for dynamic tag filtering -->
+<script>
+// Store all posts data
+const allPosts = {
+    {% for tag in site.tags %}
+    "{{ tag[0] }}": [
+        {% for post in tag[1] %}
+        {
+            title: "{{ post.title | escape }}",
+            url: "{{ post.url | relative_url }}",
+            date: "{{ post.date | date: '%B %d, %Y' }}",
+            excerpt: "{{ post.excerpt | strip_html | escape }}",
+            tags: [{% for post_tag in post.tags %}"{{ post_tag }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
+        }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+    ]{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+};
+
+// Get elements
+const tagFilter = document.getElementById('tag-filter');
+const tagsView = document.getElementById('tags-view');
+const currentTagSpan = document.getElementById('current-tag');
+const filteredPostsDiv = document.getElementById('filtered-posts');
+const clearFilterBtn = document.getElementById('clear-filter');
+
+// Function to show posts for a specific tag
+function showTagPosts(tag) {
+    const posts = allPosts[tag] || [];
+    
+    // Update URL hash
+    window.location.hash = tag;
+    
+    // Update current tag display
+    currentTagSpan.textContent = tag;
+    
+    // Generate posts HTML
+    const postsHTML = posts.map(post => `
+        <article class="post-preview">
+            <h3><a href="${post.url}">${post.title}</a></h3>
+            <div class="post-meta">
+                <time>${post.date}</time>
+                {% if site.reading_time %}
+                <span class="reading-time">• Quick read</span>
+                {% endif %}
+                <div class="post-tags">
+                    ${post.tags.map(tag => `<a href="#${tag}" class="tag" data-tag="${tag}">#${tag}</a>`).join('')}
+                </div>
+            </div>
+            <p class="post-excerpt">${post.excerpt}</p>
+            <div class="post-actions">
+                <a href="${post.url}" class="read-more-btn">
+                    Read More
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m9 18 6-6-6-6"/>
+                    </svg>
+                </a>
+            </div>
+        </article>
+    `).join('');
+    
+    filteredPostsDiv.innerHTML = postsHTML;
+    
+    // Show filtered view, hide tags view
+    tagFilter.style.display = 'block';
+    tagsView.style.display = 'none';
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+}
+
+// Function to show all tags
+function showAllTags() {
+    // Clear URL hash
+    window.location.hash = '';
+    
+    // Show tags view, hide filtered view
+    tagFilter.style.display = 'none';
+    tagsView.style.display = 'block';
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+}
+
+// Event delegation for tag clicks
+document.addEventListener('click', function(e) {
+    const tagLink = e.target.closest('[data-tag]');
+    if (tagLink) {
+        e.preventDefault();
+        const tag = tagLink.getAttribute('data-tag');
+        showTagPosts(tag);
+    }
+});
+
+// Clear filter button
+clearFilterBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    showAllTags();
+});
+
+// Handle page load with hash
+window.addEventListener('load', function() {
+    const hash = window.location.hash.substring(1); // Remove #
+    if (hash && allPosts[hash]) {
+        showTagPosts(hash);
+    }
+});
+
+// Handle hash changes (back/forward navigation)
+window.addEventListener('hashchange', function() {
+    const hash = window.location.hash.substring(1);
+    if (hash && allPosts[hash]) {
+        showTagPosts(hash);
+    } else {
+        showAllTags();
+    }
+});
+</script>

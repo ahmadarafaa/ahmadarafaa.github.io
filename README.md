@@ -1,58 +1,41 @@
 # ShellBlog
 
-A modern, clean Jekyll theme designed for technical blogs and personal portfolios. Features a terminal-inspired header, dark/light mode toggle, and optimized social sharing.
+A clean, modern Jekyll theme with terminal-inspired design, perfect for technical blogs and developer portfolios.
 
-![ShellBlog Theme Preview](https://img.shields.io/badge/Theme-ShellBlog-2d3748?style=for-the-badge&logo=terminal)
+## Features
 
-## ✨ Features
+- **Terminal-inspired header** with command prompt styling
+- **Dark/Light mode toggle** with system preference detection
+- **Responsive design** optimized for all devices
+- **Dynamic tag system** with instant filtering
+- **Built-in search** functionality
+- **Syntax highlighting** with Rouge
+- **Social sharing** buttons
+- **SEO optimized** with meta tags and structured data
 
-- **Modern Design**: Clean, professional layout with terminal-inspired header
-- **Dark/Light Mode**: Toggle between themes with smooth transitions
-- **Responsive**: Mobile-first design that looks great on all devices
-- **Fast Loading**: Optimized CSS and minimal JavaScript
-- **SEO Optimized**: Built-in SEO tags and Open Graph meta tags
-- **Social Sharing**: Integrated Twitter, LinkedIn, and Email sharing
-- **Reading Time**: Automatic reading time calculation
-- **Syntax Highlighting**: Beautiful code highlighting with Rouge
-- **Typography**: Professional typography with Inter and JetBrains Mono fonts
+## Quick Start
 
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Ruby 2.7+
-- Jekyll 4.0+
-- Bundler
-
-### Installation
-
-1. **Fork the repository**
-   - Fork this repository to your GitHub account
-   - Rename the forked repository to `yourusername.github.io` for GitHub Pages
-
-2. **Clone your forked repository**
+1. **Fork and clone this repository**
    ```bash
-   git clone https://github.com/yourusername/yourusername.github.io.git
-   cd yourusername.github.io
+   git clone https://github.com/yourusername/shellblog.git
+   cd shellblog
    ```
 
-3. **Install dependencies**
+2. **Install dependencies**
    ```bash
    bundle install
    ```
 
-4. **Configure the site**
+3. **Configure your site**
    Edit `_config.yml` with your information:
    ```yaml
    title: "Your Name"
    email: "your.email@example.com"
    description: "Your site description"
-   url: "https://yourusername.github.io"
    
    author:
      name: "Your Name"
      bio: "Your bio"
-     location: "Your Location"
    
    social:
      github: "yourusername"
@@ -63,8 +46,6 @@ A modern, clean Jekyll theme designed for technical blogs and personal portfolio
    ```bash
    bundle exec jekyll serve
    ```
-   
-   Visit `http://localhost:4000` to see your site.
 
 ## 📝 Writing Posts
 

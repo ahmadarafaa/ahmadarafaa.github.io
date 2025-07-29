@@ -41,7 +41,7 @@ layout: default
             {% if post.tags.size > 0 %}
             <div class="post-tags">
                 {% for tag in post.tags %}
-                <a href="{{ '/tags/' | append: tag | relative_url }}" class="tag">#{{ tag }}</a>
+                <a href="{{ '/tags/#' | append: tag | relative_url }}" class="tag">#{{ tag }}</a>
                 {% endfor %}
             </div>
             {% endif %}
@@ -136,7 +136,7 @@ layout: default
                     <div class="post-meta">
                         <time datetime="${post.date}">${post.date}</time>
                         <span class="reading-time">• Quick read</span>
-                        ${post.tags ? `<div class="post-tags">${post.tags.split(', ').map(tag => `<a href="/tags/${tag}" class="tag">#${tag}</a>`).join('')}</div>` : ''}
+                        ${post.tags ? `<div class="post-tags">${post.tags.split(', ').map(tag => `<a href="/tags/#${tag}" class="tag">#${tag}</a>`).join('')}</div>` : ''}
                     </div>
                     <p class="post-excerpt">${highlightMatch(post.excerpt, query)}</p>
                     <div class="post-actions">
