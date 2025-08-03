@@ -58,6 +58,27 @@ Once it's done, you'll have three databases ready to go:
 - **db_one** with `user_one` and sample product/order data
 - **db_two** with `user_two` and sample employee/project data
 
+### Choosing Your MongoDB Version
+
+The setup supports multiple MongoDB versions, so you can pick what works best for your project:
+
+- **MongoDB 8.0** (Latest, October 2024) - All the newest features
+- **MongoDB 7.0** (Stable, August 2023) - Great balance of features and stability
+- **MongoDB 6.0** (LTS, July 2022) - Long-term support, recommended for most projects
+- **MongoDB 5.0** (Legacy, July 2021) - Only if you need compatibility with older systems
+
+By default, it uses MongoDB 6.0 since it's the LTS version. To use a different version, create a `.env` file in the project directory:
+
+```bash
+# Create .env file with your preferred version
+echo "MONGO_VERSION=8.0" > .env
+./install.sh
+```
+
+The install script will show you which version it's using, so you'll always know what you're getting.
+
+*For detailed configuration options and advanced setup, check out the [project repository](https://github.com/ahmadarafaa/mongodb-replicaset-docker).*
+
 ### When Docker Gets Creative with IPs
 
 Docker has this charming habit of reassigning IP addresses when you restart containers. When this happens, your `/etc/hosts` file becomes as useful as a chocolate teapot. 
