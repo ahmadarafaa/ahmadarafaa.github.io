@@ -62,16 +62,16 @@ Once it's done, you'll have three databases ready to go:
 
 The setup supports multiple MongoDB versions, so you can pick what works best for your project:
 
-- **MongoDB 8.0** (Latest, October 2024) - All the newest features
-- **MongoDB 7.0** (Stable, August 2023) - Great balance of features and stability
-- **MongoDB 6.0** (LTS, July 2022) - Long-term support, recommended for most projects
-- **MongoDB 5.0** (Legacy, July 2021) - Only if you need compatibility with older systems
+- **MongoDB 8.0** - Latest stable release with newest features
+- **MongoDB 7.0** - Current LTS version, great balance of features and stability
+- **MongoDB 6.0** - Stable version, widely used and well-tested
+- **MongoDB 5.0** - Legacy version, only use if you need compatibility with older systems
 
-By default, it uses MongoDB 6.0 since it's the LTS version. To use a different version, create a `.env` file in the project directory:
+By default, it uses MongoDB 6.0. To use a different version, create a `.env` file in the project directory:
 
 ```bash
 # Create .env file with your preferred version
-echo "MONGO_VERSION=8.0" > .env
+echo "MONGO_VERSION=7.0" > .env
 ./install.sh
 ```
 
