@@ -3,6 +3,7 @@ layout: post
 title: "Dockerized MongoDB: From Coffee Break to Cluster!"
 date: 2025-08-03 07:30:00 +0000
 categories: [devops, mongodb, docker]
+tags: [mongodb, docker, replica-set, automation, bash, development, database, cluster]
 excerpt: "How I built a one-command MongoDB replica set setup that actually works. No more wrestling with Docker configs or spending weekends on cluster setup."
 ---
 
